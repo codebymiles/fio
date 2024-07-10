@@ -1,0 +1,20 @@
+[splunk-io-test-1]
+## Random Read/Write Test 50/50 Ratio Default
+rw=randrw
+## Size is at least double machine’s RAM divided by machine’s CPU thread count (eg, 64GB/32 vCPUs = 2GB)
+size=2G
+# Skip Local Cache
+direct=1
+# Semi-Random since Splunk does not have a set IO size
+bssplit=8k/50:4k/20:32k/15:64k/15
+ioengine=libaio
+# Test file directory - must be on the storage used by Splunk for indexes
+directory=/opt/fio/testfiles
+# Num of CPU threads on the machine
+numjobs=32
+# FIO seems to have a limit of 128 Queue size - many SAN controller queue sizes are much larger so just left at 32
+iodepth=32
+# run for 15 mins
+runtime=900
+time_based
+group_reporting
